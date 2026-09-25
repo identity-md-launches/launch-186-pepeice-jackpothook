@@ -1,0 +1,9 @@
+{
+  "completeHistoryBundleBytes": 5485139,
+  "limitBytes": 8388608,
+  "changedPathCount": 86,
+  "scopeOnly": true,
+  "trackedDependencyCaches": false,
+  "gitSubmodules": false,
+  "note": "Disposable validation commit only; managed checkout .git remains read-only."
+}

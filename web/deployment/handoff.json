@@ -1,0 +1,53 @@
+{
+  "chainId": 11155111,
+  "repoUrl": "https://github.com/identity-md-launches/launch-183-pepeice-jackpothook",
+  "version": 1,
+  "launchId": "a233e4b7-77a9-4d3c-a01f-a0d820127302",
+  "manifest": {
+    "hook": {
+      "contract": "JackpotHook",
+      "permissions": [
+        "beforeSwap",
+        "beforeSwapReturnDelta"
+      ],
+      "constructorArgs": [
+        "0xE03A1074c86CFeDd5C142C4F04F1a1536e203543"
+      ]
+    },
+    "kind": "univ4_hook",
+    "pool": {
+      "fee": 3000,
+      "tickSpacing": 60,
+      "initialPrice": "79228162514264337593543950336000",
+      "pairedCurrency": "0x0000000000000000000000000000000000000000"
+    },
+    "notes": "Sepolia ETH/ICE pool: currency0 is native ETH and currency1 is PepeIce. initialPrice is decimal sqrtPriceX96, equal to 1000 * 2^96, representing 1,000,000 ICE per ETH. Sources: src/PepeIce.sol and src/JackpotHook.sol. PepeIce has a zero-argument constructor; JackpotHook takes only IPoolManager at the literal address in constructorArgs. Only beforeSwap and beforeSwapReturnDelta are enabled; CREATE2 must produce permission bits 0x0088 under mask 0x3fff. Pool initialization needs no hook callback. The hook validates native/ERC20 pool keys using itself, without restricting them to the canonical ICE address, fee or tick spacing. Each successful swap fills the specified amount completely and retains floor(abs(amountSpecified) / 100) in per-pool, per-currency ERC-6909 claims. Fees of at least 0.00001 ETH or 1 ICE issue a ticket to the address encoded in 32-byte hookData, otherwise tx.origin. Anyone may draw once; for ticket block B, draws use the hash of B+1 during B+2 through B+256, and later draws expire without payment. Roll 77 pays 90% of both current pots; rolls 20, 40, 60, 80 and 100 pay 20 times the ticket fee in its currency, capped at 10% of that pot. Other rolls pay nothing. fillTank accepts 1-1000 pees and transfers 10 ICE per pee into the initialized pool's ICE claims; pee counts stay local. No administrative controls or upgrades. Future-block-hash randomness is manipulable; a mainnet version needs Chainlink VRF. ABIs: docs/abi/PepeIce.json and docs/abi/JackpotHook.json. Accounting and limitations: docs/CONTRACTS.md and docs/SECURITY.md. These notes describe the implementation and grant no deployment authority. Versioned launch policy and signed artifact linkage belong to services; publication, attestation, admission and deployment are later steps, followed by frontend startup. This manifest does not claim those steps or independent release review have passed.",
+    "token": {
+      "name": "pepes ice",
+      "symbol": "ICE",
+      "contract": "PepeIce",
+      "decimals": 18
+    }
+  },
+  "contracts": [
+    {
+      "name": "PepeIce",
+      "txHash": "0x83228b786430e993494ceb74cbae7d372c4c34559f6652fc6e7d20228fc96ab3",
+      "abiHash": "38880b8e56d42ce900f744a7908c7139632a49f1c3f33385c64ceaed29d37bee",
+      "address": "0xf3dab52ca75b7abeb31ecd0136b01a45a5c48f37",
+      "blockNumber": 11782139,
+      "creationCodeHash": "01f270c231f0ad30ba34caff153b5bce59324c11efbf92f4c2d0a87f59569b60"
+    },
+    {
+      "name": "JackpotHook",
+      "txHash": "0x83228b786430e993494ceb74cbae7d372c4c34559f6652fc6e7d20228fc96ab3",
+      "abiHash": "d5293ae523f861d8ad4b1d1626c034926037cae5f981a699897182ad72bb395e",
+      "address": "0xd08e759d3d89eed2de3f03006a6e21ae341d4088",
+      "blockNumber": 11782139,
+      "creationCodeHash": "c7d5bbfaa674500e5b4252167c110d1e9888ea2aa8147318bb292fd4e52f389d"
+    }
+  ],
+  "sourceCommit": "e145493b7c3079519d397de3823834c0bf773060",
+  "abiInstructions": "Build ABIs from this exact source commit; compare canonicalKeccak(abi) with abiHash. Verify deployed code on the stated chain before enabling transactions.",
+  "attestationHash": "d467ddd0724807fc37bb9da38d857e0ea36b426f8f86b782bb67f758ff3b51f5"
+}

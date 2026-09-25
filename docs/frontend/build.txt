@@ -1,0 +1,17 @@
+Command: npm run build
+Node: 22.22.2
+
+in "node_modules/@reown/appkit-controllers/node_modules/ox/_esm/core/internal/cursor.js" contains an annotation that Rollup cannot interpret due to the position of the comment. The comment will be removed to avoid issues.
+✓ 5436 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist/index.html                     0.60 kB │ gzip:   0.39 kB
+../dist/assets/index-CSYibUaq.css     34.91 kB │ gzip:   6.45 kB
+../dist/assets/index-BEnPxY9e.js   2,543.36 kB │ gzip: 502.20 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 11.71s
+Final manifest: 19 assets; 5349177 bytes

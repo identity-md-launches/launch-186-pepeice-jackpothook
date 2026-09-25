@@ -1,0 +1,90 @@
+{
+  "checkedAt": "2026-09-25T22:37:54.447Z",
+  "broadcastTransactions": 0,
+  "attempts": [
+    {
+      "rpc": "https://ethereum-sepolia-rpc.publicnode.com",
+      "chainId": 11155111,
+      "codes": [
+        {
+          "name": "PepeIce",
+          "address": "0xf3dab52ca75b7abeb31ecd0136b01a45a5c48f37",
+          "codeBytes": 1723
+        },
+        {
+          "name": "JackpotHook",
+          "address": "0xd08e759d3d89eed2de3f03006a6e21ae341d4088",
+          "codeBytes": 7780
+        }
+      ],
+      "poolId": "0x8a4279952ebfdc5be1698760df0bdd8f7643720415c0244cff84acf64a3249df",
+      "slot": [
+        "560227709747861399187319382274582",
+        177284,
+        0,
+        3000
+      ],
+      "liquidity": "0",
+      "pots": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "rpc": "https://rpc.sepolia.ethpandaops.io",
+      "chainId": 11155111,
+      "codes": [
+        {
+          "name": "PepeIce",
+          "address": "0xf3dab52ca75b7abeb31ecd0136b01a45a5c48f37",
+          "codeBytes": 1723
+        },
+        {
+          "name": "JackpotHook",
+          "address": "0xd08e759d3d89eed2de3f03006a6e21ae341d4088",
+          "codeBytes": 7780
+        }
+      ],
+      "poolId": "0x8a4279952ebfdc5be1698760df0bdd8f7643720415c0244cff84acf64a3249df",
+      "slot": [
+        "560227709747861399187319382274582",
+        177284,
+        0,
+        3000
+      ],
+      "liquidity": "0",
+      "pots": [
+        "0",
+        "0"
+      ]
+    },
+    {
+      "rpc": "https://sepolia.rpc.sentio.xyz",
+      "chainId": 11155111,
+      "codes": [
+        {
+          "name": "PepeIce",
+          "address": "0xf3dab52ca75b7abeb31ecd0136b01a45a5c48f37",
+          "codeBytes": 1723
+        },
+        {
+          "name": "JackpotHook",
+          "address": "0xd08e759d3d89eed2de3f03006a6e21ae341d4088",
+          "codeBytes": 7780
+        }
+      ],
+      "poolId": "0x8a4279952ebfdc5be1698760df0bdd8f7643720415c0244cff84acf64a3249df",
+      "slot": [
+        "560227709747861399187319382274582",
+        177284,
+        0,
+        3000
+      ],
+      "liquidity": "0",
+      "pots": [
+        "0",
+        "0"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,542 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@coinbase/wallet-sdk": {
+      "name": "@coinbase/wallet-sdk",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "eth-block-tracker"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/cbw-sdk"
+      ],
+      "fixAvailable": true
+    },
+    "@gemini-wallet/core": {
+      "name": "@gemini-wallet/core",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/rpc-errors"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@gemini-wallet/core"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/eth-json-rpc-provider": {
+      "name": "@metamask/eth-json-rpc-provider",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/json-rpc-engine"
+      ],
+      "effects": [
+        "eth-block-tracker"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/eth-json-rpc-provider"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/json-rpc-engine": {
+      "name": "@metamask/json-rpc-engine",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/rpc-errors",
+        "@metamask/utils"
+      ],
+      "effects": [
+        "@metamask/eth-json-rpc-provider"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/eth-json-rpc-provider/node_modules/@metamask/json-rpc-engine",
+        "node_modules/@metamask/json-rpc-engine"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/json-rpc-middleware-stream": {
+      "name": "@metamask/json-rpc-middleware-stream",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/json-rpc-engine",
+        "@metamask/utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/json-rpc-middleware-stream"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/providers": {
+      "name": "@metamask/providers",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/json-rpc-engine",
+        "@metamask/json-rpc-middleware-stream",
+        "@metamask/rpc-errors",
+        "@metamask/utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/providers"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/rpc-errors": {
+      "name": "@metamask/rpc-errors",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/utils"
+      ],
+      "effects": [
+        "@gemini-wallet/core"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/eth-json-rpc-provider/node_modules/@metamask/rpc-errors",
+        "node_modules/@metamask/json-rpc-engine/node_modules/@metamask/rpc-errors",
+        "node_modules/@metamask/providers/node_modules/@metamask/rpc-errors",
+        "node_modules/@metamask/rpc-errors"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/sdk": {
+      "name": "@metamask/sdk",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/providers",
+        "@metamask/sdk-communication-layer",
+        "uuid"
+      ],
+      "effects": [
+        "@wagmi/connectors"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/sdk"
+      ],
+      "fixAvailable": false
+    },
+    "@metamask/sdk-communication-layer": {
+      "name": "@metamask/sdk-communication-layer",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/sdk-communication-layer"
+      ],
+      "fixAvailable": true
+    },
+    "@metamask/utils": {
+      "name": "@metamask/utils",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "uuid"
+      ],
+      "effects": [
+        "@metamask/json-rpc-engine",
+        "@metamask/json-rpc-middleware-stream",
+        "@metamask/providers",
+        "@metamask/rpc-errors"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/eth-json-rpc-provider/node_modules/@metamask/json-rpc-engine/node_modules/@metamask/utils",
+        "node_modules/@metamask/eth-json-rpc-provider/node_modules/@metamask/rpc-errors/node_modules/@metamask/utils",
+        "node_modules/@metamask/json-rpc-engine/node_modules/@metamask/rpc-errors/node_modules/@metamask/utils",
+        "node_modules/@metamask/json-rpc-engine/node_modules/@metamask/utils",
+        "node_modules/@metamask/json-rpc-middleware-stream/node_modules/@metamask/utils",
+        "node_modules/@metamask/providers/node_modules/@metamask/rpc-errors/node_modules/@metamask/utils",
+        "node_modules/@metamask/providers/node_modules/@metamask/utils",
+        "node_modules/@metamask/utils"
+      ],
+      "fixAvailable": true
+    },
+    "@rainbow-me/rainbowkit": {
+      "name": "@rainbow-me/rainbowkit",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "wagmi"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@rainbow-me/rainbowkit"
+      ],
+      "fixAvailable": false
+    },
+    "@reown/appkit": {
+      "name": "@reown/appkit",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit-controllers",
+        "@reown/appkit-pay",
+        "@reown/appkit-scaffold-ui",
+        "@reown/appkit-ui",
+        "@reown/appkit-utils",
+        "@walletconnect/universal-provider"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit"
+      ],
+      "fixAvailable": true
+    },
+    "@reown/appkit-controllers": {
+      "name": "@reown/appkit-controllers",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@walletconnect/universal-provider"
+      ],
+      "effects": [
+        "@reown/appkit-pay",
+        "@reown/appkit-scaffold-ui",
+        "@reown/appkit-ui"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-controllers"
+      ],
+      "fixAvailable": true
+    },
+    "@reown/appkit-pay": {
+      "name": "@reown/appkit-pay",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit-controllers",
+        "@reown/appkit-ui",
+        "@reown/appkit-utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-pay"
+      ],
+      "fixAvailable": true
+    },
+    "@reown/appkit-scaffold-ui": {
+      "name": "@reown/appkit-scaffold-ui",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit-controllers",
+        "@reown/appkit-ui",
+        "@reown/appkit-utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-scaffold-ui"
+      ],
+      "fixAvailable": true
+    },
+    "@reown/appkit-ui": {
+      "name": "@reown/appkit-ui",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit-controllers"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-ui"
+      ],
+      "fixAvailable": true
+    },
+    "@reown/appkit-utils": {
+      "name": "@reown/appkit-utils",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit-controllers",
+        "@walletconnect/universal-provider"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-utils"
+      ],
+      "fixAvailable": true
+    },
+    "@wagmi/connectors": {
+      "name": "@wagmi/connectors",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@coinbase/wallet-sdk",
+        "@gemini-wallet/core",
+        "@metamask/sdk",
+        "@walletconnect/ethereum-provider"
+      ],
+      "effects": [
+        "wagmi"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@wagmi/connectors"
+      ],
+      "fixAvailable": false
+    },
+    "@walletconnect/core": {
+      "name": "@walletconnect/core",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@walletconnect/utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-controllers/node_modules/@walletconnect/core",
+        "node_modules/@reown/appkit-utils/node_modules/@walletconnect/core",
+        "node_modules/@reown/appkit/node_modules/@walletconnect/core",
+        "node_modules/@walletconnect/core"
+      ],
+      "fixAvailable": true
+    },
+    "@walletconnect/ethereum-provider": {
+      "name": "@walletconnect/ethereum-provider",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@reown/appkit",
+        "@walletconnect/sign-client",
+        "@walletconnect/universal-provider",
+        "@walletconnect/utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@walletconnect/ethereum-provider"
+      ],
+      "fixAvailable": true
+    },
+    "@walletconnect/sign-client": {
+      "name": "@walletconnect/sign-client",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@walletconnect/core",
+        "@walletconnect/utils"
+      ],
+      "effects": [],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-controllers/node_modules/@walletconnect/sign-client",
+        "node_modules/@reown/appkit-utils/node_modules/@walletconnect/sign-client",
+        "node_modules/@reown/appkit/node_modules/@walletconnect/sign-client",
+        "node_modules/@walletconnect/sign-client"
+      ],
+      "fixAvailable": true
+    },
+    "@walletconnect/universal-provider": {
+      "name": "@walletconnect/universal-provider",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@walletconnect/sign-client",
+        "@walletconnect/utils"
+      ],
+      "effects": [
+        "@reown/appkit",
+        "@reown/appkit-controllers",
+        "@reown/appkit-utils"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-controllers/node_modules/@walletconnect/universal-provider",
+        "node_modules/@reown/appkit-utils/node_modules/@walletconnect/universal-provider",
+        "node_modules/@reown/appkit/node_modules/@walletconnect/universal-provider",
+        "node_modules/@walletconnect/universal-provider"
+      ],
+      "fixAvailable": true
+    },
+    "@walletconnect/utils": {
+      "name": "@walletconnect/utils",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "query-string"
+      ],
+      "effects": [
+        "@walletconnect/core",
+        "@walletconnect/ethereum-provider",
+        "@walletconnect/sign-client",
+        "@walletconnect/universal-provider"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@reown/appkit-controllers/node_modules/@walletconnect/utils",
+        "node_modules/@reown/appkit-utils/node_modules/@walletconnect/utils",
+        "node_modules/@reown/appkit/node_modules/@walletconnect/utils",
+        "node_modules/@walletconnect/utils"
+      ],
+      "fixAvailable": true
+    },
+    "decode-uri-component": {
+      "name": "decode-uri-component",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1147955,
+          "name": "decode-uri-component",
+          "dependency": "decode-uri-component",
+          "title": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input",
+          "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-400",
+            "CWE-405",
+            "CWE-407",
+            "CWE-1176"
+          ],
+          "cvss": {
+            "score": 0,
+            "vectorString": null
+          },
+          "range": "<=0.4.2"
+        }
+      ],
+      "effects": [
+        "query-string"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/decode-uri-component"
+      ],
+      "fixAvailable": true
+    },
+    "eth-block-tracker": {
+      "name": "eth-block-tracker",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "@metamask/eth-json-rpc-provider"
+      ],
+      "effects": [
+        "@coinbase/wallet-sdk"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/eth-block-tracker"
+      ],
+      "fixAvailable": true
+    },
+    "query-string": {
+      "name": "query-string",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "decode-uri-component"
+      ],
+      "effects": [
+        "@walletconnect/utils"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/query-string"
+      ],
+      "fixAvailable": true
+    },
+    "uuid": {
+      "name": "uuid",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1119441,
+          "name": "uuid",
+          "dependency": "uuid",
+          "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+          "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+          "severity": "moderate",
+          "cwe": [
+            "CWE-787",
+            "CWE-1285"
+          ],
+          "cvss": {
+            "score": 7.5,
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N"
+          },
+          "range": "<11.1.1"
+        }
+      ],
+      "effects": [
+        "@metamask/sdk",
+        "@metamask/sdk-communication-layer",
+        "@metamask/utils"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/@metamask/eth-json-rpc-provider/node_modules/uuid",
+        "node_modules/@metamask/json-rpc-engine/node_modules/uuid",
+        "node_modules/@metamask/json-rpc-middleware-stream/node_modules/uuid",
+        "node_modules/@metamask/providers/node_modules/uuid",
+        "node_modules/@metamask/utils/node_modules/uuid",
+        "node_modules/uuid"
+      ],
+      "fixAvailable": false
+    },
+    "wagmi": {
+      "name": "wagmi",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "@wagmi/connectors"
+      ],
+      "effects": [
+        "@rainbow-me/rainbowkit"
+      ],
+      "range": "",
+      "nodes": [
+        "node_modules/wagmi"
+      ],
+      "fixAvailable": false
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 28,
+      "high": 0,
+      "critical": 0,
+      "total": 28
+    },
+    "dependencies": {
+      "prod": 488,
+      "dev": 101,
+      "optional": 156,
+      "peer": 75,
+      "peerOptional": 0,
+      "total": 663
+    }
+  }
+}

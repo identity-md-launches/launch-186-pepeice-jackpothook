@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-25T22:41:51.903Z",
+  "method": "eth_call only",
+  "results": [
+    {
+      "native": true,
+      "amount": "0.001",
+      "result": [
+        "49130844778701445862975",
+        "279645"
+      ]
+    },
+    {
+      "native": true,
+      "amount": "0.005",
+      "result": [
+        "245593892716398997041283",
+        "279613"
+      ]
+    },
+    {
+      "native": true,
+      "amount": "0.01",
+      "result": [
+        "491037040809897439097897",
+        "279613"
+      ]
+    },
+    {
+      "native": false,
+      "amount": "100",
+      "error": "The contract function \"quoteExactInputSingle\" reverted with the following signature:\n0x6190b2b0"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {decodeAbiParameters, encodeAbiParameters, keccak256, parseAbiParameters, toBytes, toHex, type Address, type Hex} from 'viem';
+import {drawWindow,isWin,minimumOut,poolKey,poolId,poolTuple,rollFor,swapInput,switchNetwork} from '../src/protocol';
+import {canonical} from '../src/canonical.mjs';
+import {safePath,type Deployment} from '../src/config';
+const d=JSON.parse(readFileSync('public/imd-deployment.json','utf8')) as Deployment;
+const player='0x0000000000000000000000000000000000001234' as Address;
+test('handoff pins implementation-derived canonical ABIs',()=>{for(const c of d.contracts){const abi=JSON.parse(readFileSync(`public/${c.abiPath}`,'utf8'));assert.equal(keccak256(toBytes(canonical(abi))).slice(2),c.abiHash);}});
+test('PoolId is the ABI hash of the complete attested pool key',()=>{const key=poolKey(d);assert.equal(key.currency0,d.pool.pairedCurrency);assert.equal(poolId(key),keccak256(encodeAbiParameters(parseAbiParameters('address,address,uint24,int24,address'),[key.currency0,key.currency1,key.fee,key.tickSpacing,key.hooks])));});
+for(const native of [true,false])test(`${native?'native':'token'} exact-input router payload, settlement and hook player`,()=>{
+ const key=poolKey(d);const input=swapInput(key,native,100n,90n,player);
+ const [actions,params]=decodeAbiParameters(parseAbiParameters('bytes,bytes[]'),input);assert.equal(actions,'0x060c0f');
+ const [swap]=decodeAbiParameters(parseAbiParameters(`(${poolTuple} poolKey,bool zeroForOne,uint128 amountIn,uint128 amountOutMinimum,bytes hookData)`),params[0]);
+ assert.deepEqual(swap.poolKey.hooks.toLowerCase(),key.hooks);assert.equal(swap.zeroForOne,native);assert.equal(swap.amountIn,100n);assert.equal(swap.amountOutMinimum,90n);
+ assert.equal(decodeAbiParameters([{type:'address'}],swap.hookData)[0].toLowerCase(),player);
+ assert.deepEqual(decodeAbiParameters(parseAbiParameters('address,uint256'),params[1]).map(x=>typeof x==='string'?x.toLowerCase():x),[native?key.currency0:key.currency1,100n]);
+ assert.equal(decodeAbiParameters(parseAbiParameters('address,uint256'),params[2])[1],90n);
+});
+test('slippage rounds down and rejects unsafe bounds',()=>{assert.equal(minimumOut(1001n,100),990n);for(const bps of [-1,0,9,501,NaN,2.5])assert.throws(()=>minimumOut(1000n,bps));});
+test('draw window matches B+2 through B+256 exactly',()=>{for(const n of [100n,101n])assert.equal(drawWindow(100n,n),'waiting');for(const n of [102n,356n])assert.equal(drawWindow(100n,n),'ready');assert.equal(drawWindow(100n,357n),'expired');});
+test('roll is uint256 Keccak of abi.encode (not packed)',()=>{const hash=toHex(135n,{size:32});const id=poolId(poolKey(d));const expected=Number(BigInt(keccak256(encodeAbiParameters([{type:'bytes32'},{type:'bytes32'},{type:'uint256'}],[hash,id,0n])))%100n)+1;assert.equal(rollFor(hash,id,0n),expected);});
+test('only the six specified outcomes win',()=>{assert.deepEqual(Array.from({length:100},(_,i)=>i+1).filter(isWin),[20,40,60,77,80,100]);});
+test('unknown chain adds exact vetted parameters, then switches again',async()=>{const calls:unknown[]=[];let count=0;await switchNetwork({request:async arg=>{calls.push(arg);if(count++===0)throw {code:4902};}},d);assert.deepEqual(calls,[{method:'wallet_switchEthereumChain',params:[{chainId:d.walletAddChain.chainId}]},{method:'wallet_addEthereumChain',params:[d.walletAddChain]},{method:'wallet_switchEthereumChain',params:[{chainId:d.walletAddChain.chainId}]}]);});
+test('a rejected switch does not add a chain',async()=>{let calls=0;await assert.rejects(switchNetwork({request:async()=>{calls++;throw {code:4001};}},d));assert.equal(calls,1);});
+test('export paths cannot escape static root',()=>{for(const p of ['../secret','/etc/passwd','https://x','abi/../../x'])assert.equal(safePath(p),false);assert.equal(safePath('abi/PepeIce.json'),true);});

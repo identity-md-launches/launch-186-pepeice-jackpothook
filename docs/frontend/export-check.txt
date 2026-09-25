@@ -1,0 +1,5 @@
+
+> pepes-armed-release@1.0.0 check:export
+> node scripts/check-export.mjs
+
+PASS: exact handoff, network, pinned ABI hashes, 19 assets, 5349177 export bytes.

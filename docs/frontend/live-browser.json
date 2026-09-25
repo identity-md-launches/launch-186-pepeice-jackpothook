@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-09-25T22:53:31.370Z",
+  "mode": "Read-only production browser; no wallet injected; no mocks",
+  "errors": [],
+  "failedRequests": [],
+  "status": "Sepolia arcade ready. Connect your wallet to play for test value.",
+  "balances": "Your ICE\n—\nYour Sepolia ETH\n—\nJackpot · ICE\n0\nJackpot · ETH\n0",
+  "price": "1 ETH = 50,000,000 ICE · Block 11782277 · Read 10:53:32 PM\nRefresh",
+  "walletWritesDisabled": true,
+  "overflow": false
+}
