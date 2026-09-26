@@ -1,19 +1,19 @@
 import { type Abi, type Address, createPublicClient, defineChain, fallback, http, keccak256, toBytes, isAddress } from 'viem';
 import { canonical } from './canonical.mjs';
+import { MANIFEST_KEYS } from './chain.mjs';
 export interface Deployment {
  version:1; launchId:string; chainId:number; sourceCommit:string; attestationHash:string;
  contracts:{name:string; address:Address; abiHash:string; abiPath:string}[];
  assets:{path:string;sha256:string}[];
- pool:{pairedCurrency:Address; fee:number; tickSpacing:number};
  network:{chainId:number; name:string; testnet:boolean; rpcUrls:string[]; explorer:string; nativeCurrency:{name:string;symbol:string;decimals:number}; faucets:string[]; uniswapV4:Record<'poolManager'|'universalRouter'|'quoter'|'stateView'|'positionManager'|'permit2',Address>};
- walletAddChain:{chainId:string;chainName:string;rpcUrls:string[];nativeCurrency:{name:string;symbol:string;decimals:number};blockExplorerUrls:string[]};
 }
 export function safePath(path:string) { return /^[a-zA-Z0-9_./-]+$/.test(path) && !path.startsWith('/') && !path.split('/').includes('..'); }
 export async function loadDeployment() {
  const response=await fetch('./imd-deployment.json',{cache:'no-cache'});
  if(!response.ok) throw Error('Deployment file unavailable. Reload this release.');
  const d=await response.json() as Deployment;
- if(d.version!==1 || d.chainId!==d.network?.chainId || Number(d.walletAddChain?.chainId)!==d.chainId || !d.network.testnet || !d.pool) throw Error('Deployment network binding is invalid.');
+ if(Object.keys(d).sort().join()!==[...MANIFEST_KEYS].sort().join()) throw Error('Deployment file does not match version 1.');
+ if(d.version!==1 || d.chainId!==d.network?.chainId || !d.network.testnet) throw Error('Deployment network binding is invalid.');
  if(d.contracts.length!==2 || !['PepeIce','JackpotHook'].every(name=>d.contracts.some(c=>c.name===name))) throw Error('Incomplete deployment.');
  const abis:Record<string,Abi>={};
  for(const c of d.contracts) {

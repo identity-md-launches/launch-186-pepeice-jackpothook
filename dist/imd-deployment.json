@@ -68,12 +68,12 @@
       "sha256": "102c5b5d05d135df6022ae8318c796a480d2a5e08452a05ca8a7e2bc10b4bbf2"
     },
     {
-      "path": "assets/index-BEnPxY9e.js",
-      "sha256": "5d1028f0dc4fcf5b9913460052df26be59d33a57c8c3956bb74726520df599b2"
-    },
-    {
       "path": "assets/index-CSYibUaq.css",
       "sha256": "fcf5e31621bc43012dbde2d45ee27973b17ada7f1a3c3f8f7709d99d0c0851f8"
+    },
+    {
+      "path": "assets/index-DPsPbUWa.js",
+      "sha256": "e2f7f6d946df448f32572bfa357c39b023c627cfb325b350fb9c251a96556a00"
     },
     {
       "path": "assets/medallion.webp",
@@ -93,7 +93,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "2480c366115f135cdb965c2869985ff10f125512f00e357d5307367105125c96"
+      "sha256": "300585370752fb50358a4bc3324aea456deae2b487203ae4cb491a42c20cd17a"
     }
   ],
   "network": {
@@ -123,28 +123,5 @@
       "positionManager": "0x429ba70129df741b2ca2a85bc3a2a3328e5c09b4",
       "permit2": "0x000000000022d473030f116ddee9f6b43ac78ba3"
     }
-  },
-  "walletAddChain": {
-    "chainId": "0xaa36a7",
-    "chainName": "Sepolia",
-    "rpcUrls": [
-      "https://ethereum-sepolia-rpc.publicnode.com",
-      "https://rpc.sepolia.ethpandaops.io",
-      "https://sepolia.rpc.sentio.xyz"
-    ],
-    "nativeCurrency": {
-      "name": "Sepolia Ether",
-      "symbol": "ETH",
-      "decimals": 18
-    },
-    "blockExplorerUrls": [
-      "https://sepolia.etherscan.io"
-    ]
-  },
-  "pool": {
-    "fee": 3000,
-    "tickSpacing": 60,
-    "initialPrice": "79228162514264337593543950336000",
-    "pairedCurrency": "0x0000000000000000000000000000000000000000"
   }
 }

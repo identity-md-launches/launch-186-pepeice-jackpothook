@@ -2,6 +2,7 @@ import {test,expect} from '@playwright/test';
 import {decodeAbiParameters,parseAbiParameters} from 'viem';
 import {fixture,d,player} from './wallet-fixture';
 import {poolTuple} from '../src/protocol';
+import {walletAddChain} from '../src/chain.mjs';
 async function open(page:import('@playwright/test').Page){await page.goto('/ipfs/test/');await expect(page.getByRole('button',{name:'Connect Wallet',exact:true})).toBeVisible();await page.getByRole('button',{name:'Connect Wallet',exact:true}).click();await expect(page.getByRole('button',{name:'Quote Fridge Swap'})).toBeEnabled();}
 const quote=(page:import('@playwright/test').Page)=>page.getByRole('button',{name:'Quote Fridge Swap'}).click();
 test('static subpath, no wallet, no overflow, local assets, keyboard and mobile screenshots',async({page})=>{
@@ -16,7 +17,7 @@ test('static subpath, no wallet, no overflow, local assets, keyboard and mobile 
 });
 test('unknown network offers switch, adds exact vetted chain, reconnects live reads',async({page})=>{
  await fixture(page,{wrong:true});await page.goto('/');await page.getByRole('button',{name:'Connect Wallet',exact:true}).click();await expect(page.getByText('Wrong network.',{exact:false})).toBeVisible();
- await expect(page.getByRole('button',{name:'Quote Fridge Swap'})).toBeDisabled();await page.getByRole('button',{name:'Switch to Sepolia'}).click();await expect(page.getByRole('button',{name:'Quote Fridge Swap'})).toBeEnabled();expect(await page.evaluate(()=>(window as unknown as {addedChain:unknown}).addedChain)).toEqual(d.walletAddChain);
+ await expect(page.getByRole('button',{name:'Quote Fridge Swap'})).toBeDisabled();await page.getByRole('button',{name:'Switch to Sepolia'}).click();await expect(page.getByRole('button',{name:'Quote Fridge Swap'})).toBeEnabled();expect(await page.evaluate(()=>(window as unknown as {addedChain:unknown}).addedChain)).toEqual(walletAddChain(d.network));
  await expect(page.getByLabel('Live chain state')).toContainText('100,000');await expect(page.getByText('1 ETH = 1,000,000 ICE',{exact:false})).toBeVisible();
 });
 test('ICE sale uses separate exact approvals then router payload with hookData',async({page})=>{

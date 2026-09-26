@@ -3,11 +3,14 @@ import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import {keccak256,toBytes} from 'viem';
 import {canonical} from '../src/canonical.mjs';
+import {MANIFEST_KEYS,POOL,walletAddChain} from '../src/chain.mjs';
 const d=JSON.parse(await readFile('../dist/imd-deployment.json','utf8'));
 const h=JSON.parse(await readFile('deployment/handoff.json','utf8'));
 const n=JSON.parse(await readFile('deployment/network.json','utf8'));
 for(const field of ['version','launchId','chainId','sourceCommit','attestationHash'])assert.deepEqual(d[field],h[field]);
-assert.deepEqual(d.network,n.network);assert.deepEqual(d.walletAddChain,n.walletAddChain);assert.deepEqual(d.pool,h.manifest.pool);
+assert.deepEqual(Object.keys(d).sort(),[...MANIFEST_KEYS].sort());
+assert.deepEqual(d.network,n.network);if(n.walletAddChain)assert.deepEqual(walletAddChain(d.network),n.walletAddChain);
+for(const field of ['pairedCurrency','fee','tickSpacing'])assert.equal(String(h.manifest.pool[field]).toLowerCase(),String(POOL[field]).toLowerCase());
 assert.deepEqual(d.contracts.map(({abiPath,...rest})=>rest),h.contracts.map(({name,address,abiHash})=>({name,address,abiHash})));
 for(const c of d.contracts){assert(!c.abiPath.includes('..'));const abi=JSON.parse(await readFile(`../dist/${c.abiPath}`,'utf8'));assert.equal(keccak256(toBytes(canonical(abi))).slice(2),c.abiHash);}
 async function walk(dir,prefix=''){const out=[];for(const e of await readdir(dir,{withFileTypes:true})){assert(!e.isSymbolicLink());if(e.isDirectory())out.push(...await walk(`${dir}/${e.name}`,prefix+e.name+'/'));else if(prefix+e.name!=='imd-deployment.json')out.push(prefix+e.name);}return out.sort();}

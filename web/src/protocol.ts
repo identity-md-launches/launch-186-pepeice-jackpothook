@@ -1,5 +1,6 @@
 import { encodeAbiParameters, keccak256, parseAbi, parseAbiParameters, type Address, type Hex } from 'viem';
 import type { Deployment } from './config';
+import { POOL, walletAddChain } from './chain.mjs';
 export const poolTuple='(address currency0,address currency1,uint24 fee,int24 tickSpacing,address hooks)';
 export const quoterAbi=parseAbi([`function quoteExactInputSingle((${poolTuple} poolKey,bool zeroForOne,uint128 exactAmount,bytes hookData) params) returns (uint256 amountOut,uint256 gasEstimate)`]);
 export const routerAbi=parseAbi(['function execute(bytes commands,bytes[] inputs,uint256 deadline) payable']);
@@ -7,8 +8,8 @@ export const permitAbi=parseAbi(['function allowance(address user,address token,
 export const stateAbi=parseAbi(['function getSlot0(bytes32 poolId) view returns (uint160 sqrtPriceX96,int24 tick,uint24 protocolFee,uint24 lpFee)','function getLiquidity(bytes32 poolId) view returns (uint128 liquidity)']);
 export function poolKey(d:Deployment) {
  const token=d.contracts.find(c=>c.name==='PepeIce')!.address;
- const currencies=[d.pool.pairedCurrency,token].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
- return {currency0:currencies[0],currency1:currencies[1],fee:d.pool.fee,tickSpacing:d.pool.tickSpacing,hooks:d.contracts.find(c=>c.name==='JackpotHook')!.address};
+ const currencies=[POOL.pairedCurrency as Address,token].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
+ return {currency0:currencies[0],currency1:currencies[1],fee:POOL.fee,tickSpacing:POOL.tickSpacing,hooks:d.contracts.find(c=>c.name==='JackpotHook')!.address};
 }
 export type PoolKey=ReturnType<typeof poolKey>;
 export function poolId(key:PoolKey) { return keccak256(encodeAbiParameters(parseAbiParameters(poolTuple),[key])); }
@@ -29,12 +30,13 @@ export function errorMessage(error:unknown):string {
  return (e?.shortMessage||e?.message||'The chain did not answer. Try refresh.').slice(0,240);
 }
 export async function switchNetwork(provider:{request:(arg:{method:string;params?:unknown[]})=>Promise<unknown>},d:Deployment) {
- const params=[{chainId:d.walletAddChain.chainId}];
+ const chain=walletAddChain(d.network);
+ const params=[{chainId:chain.chainId}];
  try { await provider.request({method:'wallet_switchEthereumChain',params}); }
  catch(e) {
   const err=e as {code?:number;message?:string;data?:{originalError?:{code?:number}}};
   if(err.code!==4902 && err.data?.originalError?.code!==4902 && !/unknown chain|unrecognized chain|chain.*not.*added/i.test(err.message||'')) throw e;
-  await provider.request({method:'wallet_addEthereumChain',params:[d.walletAddChain]});
+  await provider.request({method:'wallet_addEthereumChain',params:[chain]});
   await provider.request({method:'wallet_switchEthereumChain',params});
  }
 }
