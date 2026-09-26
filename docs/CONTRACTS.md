@@ -147,10 +147,12 @@ calling the receiver. There is no keeper privilege, alternate recipient or admin
 operations. `JackpotHook.t.sol` exercises the real v4 manager, all four swap modes and price-limit
 failures, rounding, attribution/thresholds, permissions, constructor flags, draw windows and
 outcomes, duplicate/missing tickets and tank validation. `JackpotAdversarial.t.sol` checks payment
-rollback/retry, reentrancy, pool isolation, rejected transfer-tax funding and an all-ICE initial
+rollback/retry/expiry, reentrancy, pool isolation, rejected transfer-tax funding and an all-ICE initial
 liquidity position through first buy, first sell and LP withdrawal. `JackpotConservation.t.sol`
 fuzzes 40-step sequences of swaps, tank fills, winning/losing/expired/repeated draws and checks
 actual payouts plus remaining claims equal all amounts received in each currency after every step.
+`JackpotBoundaries.t.sol` exercises all 100 rolls with both fee currencies, checks every payout
+and repeat-draw refusal, and verifies that unfunded swaps and tank purchases roll back atomically.
 
 Tests use controlled block hashes solely to reach every outcome. They demonstrate accounting,
 not production randomness or a deployed router integration. Independent release review and fork

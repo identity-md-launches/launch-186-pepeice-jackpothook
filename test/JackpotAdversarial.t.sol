@@ -48,6 +48,42 @@ contract TaxToken is ERC20 {
 }
 
 contract JackpotAdversarialTest is JackpotFixture {
+    function test_failedPaymentCanExpireWithoutCallingTheRejectingReceiver() public {
+        PayoutReceiver receiver = new PayoutReceiver(hook, key);
+        _swap(true, -int256(1 ether), abi.encode(receiver));
+        _swap(false, -int256(1000 ether), abi.encode(PLAYER));
+        _forceRoll(0, 77);
+        (uint256 ethPot, uint256 icePot) = hook.pots(poolId);
+        vm.expectRevert();
+        hook.draw(poolId, 0);
+        assertFalse(hook.ticket(poolId, 0).drawn);
+
+        vm.roll(hook.ticket(poolId, 0).blockNumber + 257);
+        vm.expectEmit(true, true, true, true, address(hook));
+        emit Drawn(poolId, 0, address(receiver), 0, 0, 0);
+        hook.draw(poolId, 0);
+        assertTrue(hook.ticket(poolId, 0).drawn);
+        assertFalse(receiver.attempted());
+        assertTrue(receiver.reject());
+        assertEq(address(receiver).balance, 0);
+        assertEq(ice.balanceOf(address(receiver)), 0);
+        (uint256 ethAfter, uint256 iceAfter) = hook.pots(poolId);
+        assertEq(ethAfter, ethPot);
+        assertEq(iceAfter, icePot);
+        vm.expectRevert(JackpotHook.AlreadyDrawn.selector);
+        hook.draw(poolId, 0);
+        _assertBacking();
+
+        // A receiver's failure cannot stop a later ticket from winning the retained funds.
+        uint256 nextId = hook.nextTicketId(poolId);
+        _swap(true, -int256(0.001 ether), abi.encode(PLAYER));
+        _forceRoll(nextId, 77);
+        hook.draw(poolId, nextId);
+        assertGt(PLAYER.balance, 0);
+        assertGt(ice.balanceOf(PLAYER), 0);
+        _assertBacking();
+    }
+
     function test_failedPaymentRollsBackAndRetryRejectsReentrancy() public {
         PayoutReceiver receiver = new PayoutReceiver(hook, key);
         _swap(true, -int256(1 ether), abi.encode(receiver));
